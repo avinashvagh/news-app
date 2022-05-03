@@ -1,0 +1,16 @@
+#navbar{
+    display: flex;
+    border:2px solid;
+    align-items: center;
+    background-color: rgb(247, 225, 185);
+  }
+  #navbar>h1{
+     margin-left: 30px;
+  }
+  #navbar>input{
+     margin-left: 30px;
+     width: 75%;
+     border: 2px solid;
+      padding: 1% 0%;
+      border-radius: 20px;
+  }

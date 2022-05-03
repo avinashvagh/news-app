@@ -1,132 +1,66 @@
 // Ude Import export (MANDATORY)
 // Onclicking store the news in local storage with key "news" so that you can access that on news.html page
 
-let newsDiv= document.getElementById("news");
+import { navbar } from "../components/navbar.js";
+let na = document.getElementById("navbar");
+na.innerHTML = navbar();
 
-async function getNews(){
-    try {
-        let res= await fetch("https://masai-mock-api.herokuapp.com/news/top-headlines?country={country code}")
-        let data= await res.json();
-        let news= data.articles;
-        appendnews(news);
-    } catch(e) {
-        console.log(e);
-    }
-}
-getNews();
+let search = (e) => {
+  if (e.key === "Enter") {
+    window.location.href = "search.html";
+    let value = document.getElementById("search_input").value;
+    searchI(value).then((dat) => {
+      console.log(dat);
+      let result = document.getElementById("results");
+      result.innerHTML = "";
+      append(dat, result);
+    });
+  }
+};
+document.getElementById("search_input").addEventListener("keydown", search);
 
-function appendnews(newsIn){
-    newsIn.forEach(news) => {
-        let newsDiv= document.createElement("div");
-        newsDiv.classList.add("news");
-        newsDiv.innerHTML= `
-            <div class="news-img">
-                <img src="${news.urlToImage}" alt="${news.title}">
-            </div>
-            <div class="news-desc">
-                <h2><a href="${news.url}">${news.title}</a></h2>
-                <p>${news.description}</p>
-            </div>
-        `;
-        news.appendChild(newsDiv);
-    }
-}
+let sbar = document.getElementById("sidebar").children;
 
-if(localStorage.getItem("news")==null) {
-    localStorage.setItem("news", JSON.stringify([]));
-}
-
-function shownews(news){
-    let myNews= JSON.parse(localStorage.getItem("news"));
-    myNews.push(news);
-
-    localStorage.setItem("news", JSON.stringify(myNews));
-
-    setTimeout(() => {
-        window.location.href= "news.html";
-    }   , 1500);
-
-    if(localStorage.getItem("seach_news")==null){
-        localStorage.setItem("seach_news", JSON.stringify([]));
-    }
-
-    function seach_news(){
-        let search = document.getElementById("search").value;
-        let arr = JSON.parse(localStorage.getItem("seach_news"));
-
-      if(search!== ""){
-        arr.push(search);
-        // localStorage.setItem("seach_news", JSON.stringify(arr));
-      }
-      localStorage.setItem("seach_news", JSON.stringify(arr));
-
-        setTimeout(() => {
-            window.location.href= "search.html";
-        },1500);
-
-
-    }
-
+async function cSearch() {
+  console.log(this.id);
+  try {
+    let res = await fetch(
+      `https://masai-mock-api.herokuapp.com/news/top-headlines?country=${this.id}`
+    );
+    let data = await res.json();
+    // console.log(data);
+    append(data);
+  } catch (err) {
+    console.log(err);
+  }
 }
 
+for (let el of sbar) {
+  el.addEventListener("click", cSearch);
+}
 
+let append = (data) => {
+  console.log(data.articles[0].title);
+  let result = document.getElementById("results");
+  result.innerHTML = "";
+  data.articles.forEach(({ title, urlToImage, content }) => {
+    let div = document.createElement("div");
+    div.style.display = "flex";
+    div.style.margin = "15px 2px";
+    div.style.border = "1px solid black";
+    let img = document.createElement("img");
+    let box = document.createElement("div");
+    box.style.margin = "0px 10px";
+    let h3 = document.createElement("h3");
+    let p = document.createElement("p");
+    p.innerText = content;
+    img.src = urlToImage;
+    img.style.width = "25%";
+    img.style.height = "100%";
+    h3.innerText = title;
+    box.append(h3, p);
 
-// !! my aobve code shown erroe so restrating again
-
-
-// import {navbar} from ".../components/navbar.js";
-
-// let na = document.getElementById("results");
-// na.innerHTML= navbar();
-
-// let search_news= async(e)=>{
-
-//     try{
-//         let value= document.getElementById("search").value;
-//         console.log(value);
-//         let url="https://masai-mock-api.herokuapp.com/news/top-headlines?country=${value}";
-//         let res= await fetch(url);
-//         let data= await res.json();
-
-//         append(data)
-//     } catch(err){
-//         console.log(err);
-//     }
-// }
-
-// let ids;
-// function debounce(func, delay){
-//     if(ids){
-//         clearTimeout(ids);
-//     }
-//     ids=setTimeout(function(){
-//         func();
-//     }, delay);
-// }
-
-// document.getElementById("search").addEventListener("keypress", function(){
-//     debounce(search_news, 1000);
-// });
-
-// let append= (data)=>{
-//     let v= document.getElementById("navbar");
-//     v.innerHTMl="";
-//     v.style.display="grid";
-//     v.style.gridTemplateColumns="
-//     repeat(4, 1fr)";
-//     v.style.gap=2%;
-//     console.log(data);
-//     data.news.forEach(({title, urlToImage, url})=>{
-//         let newsDiv= document.createElement("div");
-//         newsDiv.classList.add("news");
-//         newsDiv.innerHTML= `
-//             <div class="news-img">
-//                 <img src="${urlToImage}" alt="${title}">
-//             </div>
-//             <div class="news-desc">
-//                 <h2><a href="${url}">${title}</a></h2>
-//             </div>
-//         `;
-//         v.appendChild(newsDiv);
-//     })
-// }
+    div.append(img, box);
+    result.append(div);
+  });
+};

@@ -7,39 +7,19 @@
     <title>News App</title>
   </head>
   <body>
-    <!-- Give Navbar with id "navbar"  -->
-    <!-- Navbar will have input with id search_input and a link to home page i.e. index.html -->
-
-    <div id="navbar">
-      <input id="search_input" type="text" placeholder="Search" />
-      <a href="index.html">Home</a>
-    </div>
-    <!-- Sidebar will have id "sidebar"  -->
+    <div id="navbar"></div>
     <div id="sidebar">
-      <div><a href="" id="in">India News</a></div>
-      <div><a href="" id="ch">China News</a></div>
-      <div><a href="" id="us">US News</a></div>
-      <div><a href="" id="uk">UK News</a></div>
-      <div><a href="" id="nz">New Zealand News</a></div>
+      <h2>Countries</h2>
+      <h3 id="in">India</h3>
+      <h3 id="ch">China</h3>
+      <h3 id="us">Usa</h3>
+      <h3 id="uk">United Kingdom</h3>
+      <h3 id="nz">New Zealand</h3>
     </div>
-
-    <!-- Give link to top headlines of countries in sidebar with id as their country codes 
-    india :- in
-    china :- ch
-    usa :- us
-    uk : uk
-    Newzeland :- nz -->
-
-    <!-- Append results inside div with id "results"  -->
-
     <div id="results"></div>
 
+    <!-- Append results inside div with id "results"  -->
     <!-- News divs will have class "news"  -->
-    <div class="news">
-      <!-- <h3>Headline</h3>
-      <p>Description</p> -->
-    </div>
-
-    <script src="/scripts/index.js"></script>
   </body>
 </html>
+<script src="./scripts/index.js" type="module"></script>

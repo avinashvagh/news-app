@@ -1,23 +1,16 @@
-// function sidebar() {
-//   return `
-//     <div><h1>India News</h1></div>
-//     <div><h1>China News</h1></div>
-//     <div><h1>US News</h1></div>
-//     <div><h1>UK News</h1></div>
-//     <div><h1>NewZealand News</h1></div>
-//     `;
-// }
-
-// export default sidebar;
+let navbar=()=> {
 
 
-let navbar=()=>{
-    return ` 
-    <div id="navbar">
-      <input id="search_input" type="text" placeholder="Search" />
-      <a href="index.html">Home</a>
-    </div>
-    `
+    return ` <h1> <a href="index.html">News App</a></h1>
+    <input type="text" id="search_input" placeholder="Search" /> `
 }
 
-export{navbar};
+
+
+
+
+
+
+
+
+export {navbar};
